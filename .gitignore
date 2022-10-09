@@ -1,3 +1,6 @@
+cmake-build-*/
+.idea/
+
 .gitattributes
 
 *.so
@@ -8,7 +11,7 @@ manual/manual.html
 
 testes/time.txt
 testes/time-debug.txt
-
+testes/test.lua
 testes/libs/all
 
 temp
