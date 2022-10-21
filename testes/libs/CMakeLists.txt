@@ -4,6 +4,7 @@ include_directories("../../")
 function(ADD_LIB NAME SRCS DEPENDS)
     message(${NAME} " " ${SRCS})
     add_library(${NAME} SHARED "${SRCS}")
+    set_property(TARGET ${NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
     target_link_libraries(${NAME} Lua "${DEPENDS}")
 endfunction()
 

@@ -15,11 +15,12 @@ if (MSVC AND NOT (CMAKE_BUILD_TYPE MATCHES DEBUG))
 endif()
 
 add_library(Lua STATIC ${SOURCES})
+set_property(TARGET Lua PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 add_executable(LuaI lua.c)
-target_link_libraries(LuaI Lua)
+target_link_libraries(LuaI Lua m)
 
 add_executable(LuaC luac.c)
-target_link_libraries(LuaC Lua)
+target_link_libraries(LuaC Lua m)
 
 add_subdirectory("testes/libs" "testes")
