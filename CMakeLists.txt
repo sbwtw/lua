@@ -15,7 +15,7 @@ if (NOT MSVC)
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
-    add_definitions(-DLUAI_ASSERT -DLUA_USE_JUMPTABLE=0)
+    add_definitions(-DLUA_USE_JUMPTABLE=0)
 endif()
 
 add_definitions(-DLUA_USE_POSIX)
@@ -29,6 +29,7 @@ set_property(TARGET Lua PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 add_executable(LuaI lua.c)
 target_link_libraries(LuaI Lua m)
+target_compile_definitions(LuaI PUBLIC LUAI_ASSERT)
 
 add_executable(LuaC luac.c)
 target_link_libraries(LuaC Lua m)
