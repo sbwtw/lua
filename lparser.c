@@ -468,7 +468,6 @@ static void singlevar (LexState *ls, expdesc *var) {
     expdesc key;
     singlevaraux(fs, ls->envn, var, 1);  /* get environment variable */
     lua_assert(var->k != VVOID);  /* this one must exist */
-    luaK_exp2anyregup(fs, var);  /* but could be a constant */
     codestring(&key, varname);  /* key is variable name */
     luaK_indexed(fs, var, &key);  /* env[varname] */
   }
@@ -674,19 +673,19 @@ static void leaveblock (FuncState *fs) {
   LexState *ls = fs->ls;
   int hasclose = 0;
   int stklevel = reglevel(fs, bl->nactvar);  /* level outside the block */
-  removevars(fs, bl->nactvar);  /* remove block locals */
-  lua_assert(bl->nactvar == fs->nactvar);  /* back to level on entry */
-  if (bl->isloop)  /* has to fix pending breaks? */
+  if (bl->isloop)  /* fix pending breaks? */
     hasclose = createlabel(ls, luaS_newliteral(ls->L, "break"), 0, 0);
-  if (!hasclose && bl->previous && bl->upval)  /* still need a 'close'? */
+  if (!hasclose && bl->previous && bl->upval)
     luaK_codeABC(fs, OP_CLOSE, stklevel, 0, 0);
+  fs->bl = bl->previous;
+  removevars(fs, bl->nactvar);
+  lua_assert(bl->nactvar == fs->nactvar);
   fs->freereg = stklevel;  /* free registers */
   ls->dyd->label.n = bl->firstlabel;  /* remove local labels */
-  fs->bl = bl->previous;  /* current block now is previous one */
-  if (bl->previous)  /* was it a nested block? */
-    movegotosout(fs, bl);  /* update pending gotos to enclosing block */
+  if (bl->previous)  /* inner block? */
+    movegotosout(fs, bl);  /* update pending gotos to outer block */
   else {
-    if (bl->firstgoto < ls->dyd->gt.n)  /* still pending gotos? */
+    if (bl->firstgoto < ls->dyd->gt.n)  /* pending gotos in outer block? */
       undefgoto(ls, &ls->dyd->gt.arr[bl->firstgoto]);  /* error */
   }
 }
