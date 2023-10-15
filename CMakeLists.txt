@@ -18,7 +18,7 @@ if (CMAKE_BUILD_TYPE STREQUAL Debug)
     add_definitions(-DLUA_USE_JUMPTABLE=0)
 endif()
 
-add_definitions(-DLUA_USE_POSIX)
+add_definitions(-DLUA_USE_POSIX -DLUA_ASSERT -DLUA_USE_APICHECK -DLUA_DEBUG -DLUAI_ASSERT)
 
 set(SOURCES lapi.c lauxlib.c lbaselib.c lcode.c lcorolib.c lctype.c ldblib.c ldebug.c ldo.c ldump.c lfunc.c lgc.c
         linit.c liolib.c llex.c lmem.c loadlib.c lobject.c lopcodes.c lparser.c loslib.c lstate.c lstring.c lstrlib.c
