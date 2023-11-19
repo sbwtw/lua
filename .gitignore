@@ -1,5 +1,6 @@
 cmake-build-*/
 .idea/
+.vscode/
 
 .gitattributes
 
@@ -7,12 +8,11 @@ cmake-build-*/
 *.o
 *.a
 
-manual/manual.html
+lua/manual/manual.html
 
-testes/time.txt
-testes/time-debug.txt
-testes/test.lua
-testes/libs/all
+lua/testes/time.txt
+lua/testes/time-debug.txt
+lua/testes/test.lua
+lua/testes/libs/all
 
 temp
-lua
