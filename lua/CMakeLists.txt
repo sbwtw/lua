@@ -10,13 +10,14 @@ endif()
 
 if (NOT MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "-Ofast")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
     add_definitions(-DLUA_USE_JUMPTABLE=0)
 endif()
 
-add_definitions(-DLUA_USE_POSIX -DLUA_USE_APICHECK -DLUA_DEBUG)
+add_definitions(-DLUA_USE_APICHECK -DLUA_DEBUG -DLUAI_ASSERT)
 #add_definitions(-DLUA_USE_POSIX -DLUA_ASSERT -DLUA_USE_APICHECK -DLUA_DEBUG -DLUAI_ASSERT)
 
 set(SOURCES lapi.c lauxlib.c lbaselib.c lcode.c lcorolib.c lctype.c ldblib.c ldebug.c ldo.c ldump.c lfunc.c lgc.c
